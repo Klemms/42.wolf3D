@@ -6,9 +6,19 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 22:37:39 by cababou           #+#    #+#             */
-/*   Updated: 2018/12/14 00:55:27 by cababou          ###   ########.fr       */
+/*   Updated: 2018/12/14 03:03:16 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "wolf3d.h"
+
+void	init_mlx(t_wolf *wolf)
+{
+	if ((wolf->mlx = mlx_init()) == NULL)
+	{
+
+	}
+}
 
 int		main(int argc, char **argv)
 {

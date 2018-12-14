@@ -1,23 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   wolf3d.h                                           :+:      :+:    :+:   */
+/*   errors.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/13 22:37:08 by cababou           #+#    #+#             */
-/*   Updated: 2018/12/14 03:01:43 by cababou          ###   ########.fr       */
+/*   Created: 2018/12/14 03:03:58 by cababou           #+#    #+#             */
+/*   Updated: 2018/12/14 03:08:14 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef WOLF3D_H
-# define WOLF3D_H
-
-# include "mlx.h"
-
-typedef struct			s_wolf
-{
-	void				*mlx;
-}						t_wolf;
+#ifndef ERRORS_H
+# define ERRORS_H
 
 #endif

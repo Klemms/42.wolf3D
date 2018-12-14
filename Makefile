@@ -6,7 +6,7 @@
 #    By: cababou <cababou@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/13 22:39:07 by cababou           #+#    #+#              #
-#    Updated: 2018/12/14 00:53:41 by cababou          ###   ########.fr        #
+#    Updated: 2018/12/14 01:52:49 by cababou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,6 +42,9 @@ FLAG =
 
 TOTAL_FILES := $(shell echo $(SRC) | wc -w | sed -e 's/ //g')
 CURRENT_FILES = $(shell ls $(PWD)/obj/ 2> /dev/null | wc -l | sed -e 's/ //g')
+
+CC_SDL=-I/usr/local/include/SDL -D_REENTRANT
+LN_SDL=-L/usr/local/lib -Wl,-rpath,/usr/local/lib -lSDL -lSDL_image -lpthread
 
 all : libft_comp $(NAME)
 
