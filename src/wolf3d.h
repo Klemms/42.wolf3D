@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 22:37:08 by cababou           #+#    #+#             */
-/*   Updated: 2018/12/14 04:08:30 by cababou          ###   ########.fr       */
+/*   Updated: 2018/12/15 01:08:41 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include "events/mappings.h"
 
 # include <Tk/X11/X.h>
+# include <SDL2/SDL.h>
 # include "../libft/libft.h"
 
 typedef struct			s_wolf
@@ -40,6 +41,6 @@ void					exit_program(int code);
 void					init_keys(t_wolf *wolf);
 int						handler_keypress(int key, t_wolf *wolf);
 void					register_key_event(t_wolf *wolf, int key,
-							char (*handler)(t_wolf *w))
+							int (*handler)(t_wolf *w));
 
 #endif

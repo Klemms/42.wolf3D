@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/14 03:50:49 by cababou           #+#    #+#             */
-/*   Updated: 2018/12/14 04:08:09 by cababou          ###   ########.fr       */
+/*   Updated: 2018/12/15 00:54:30 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	init_keys(t_wolf *wolf)
 		exit_program(ERROR_MEMORY);
 }
 
-void	register_key_event(t_wolf *wolf, int key, char (*handler)(t_wolf *w))
+void	register_key_event(t_wolf *wolf, int key, int (*handler)(t_wolf *w))
 {
 	t_key_event	*event;
 
