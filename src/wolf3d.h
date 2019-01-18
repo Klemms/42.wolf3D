@@ -6,41 +6,81 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 22:37:08 by cababou           #+#    #+#             */
-/*   Updated: 2018/12/15 01:08:41 by cababou          ###   ########.fr       */
+/*   Updated: 2019/01/18 00:11:52 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef WOLF3D_H
 # define WOLF3D_H
 
-# include "mlx.h"
 # include "stdlib.h"
 # include "errors.h"
 
 # include "events/mappings.h"
 
-# include <Tk/X11/X.h>
 # include <SDL2/SDL.h>
 # include "../libft/libft.h"
+# include <math.h>
+
+# include <stdio.h>
+
+# define WINDOW_WIDTH 1366
+# define WINDOW_HEIGHT 768
+# define FRAMERATE 1000 / 60
+
+/*int worldMap[24][24]=
+{
+  {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,2,2,2,2,2,0,0,0,0,3,0,3,0,3,0,0,0,1},
+  {1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,3,0,0,0,3,0,0,0,1},
+  {1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,2,2,0,2,2,0,0,0,0,3,0,3,0,3,0,0,0,1},
+  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,4,0,4,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,4,0,0,0,0,5,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,4,0,4,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,4,0,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
+};*/
 
 typedef struct			s_wolf
 {
-	void				*mlx;
-	void				*main_win;
-	t_lstcontainer		*keys_events;
+	SDL_Window			*window;
+	SDL_Surface			*surface;
+	SDL_Event			last_event;
+	t_lstcontainer		*events;
+	Uint32				last_frame;
 }						t_wolf;
 
-typedef struct			s_key_event
+typedef struct			s_registered_event
 {
-	int					key;
-	int					(*handler)(t_wolf *wolf);
-}						t_key_event;
+	Uint32				type;
+	int					(*handler)(t_wolf *wolf, SDL_Event ev);
+}						t_registered_event;
+
+void					gameloop(t_wolf *wolf);
 
 void					exit_program(int code);
 
-void					init_keys(t_wolf *wolf);
-int						handler_keypress(int key, t_wolf *wolf);
-void					register_key_event(t_wolf *wolf, int key,
-							int (*handler)(t_wolf *w));
+void					init_events(t_wolf *wolf);
+int						event_handler(t_wolf *wolf, SDL_Event sdl_event);
+void					register_event(t_wolf *wolf, Uint32 type,
+							int (*handler)(t_wolf *w, SDL_Event ev));
+void					distribute_events(t_wolf *wolf, SDL_Event sdl_event);
+
+void					quit_event(t_wolf *w, SDL_Event sdl_event);
 
 #endif

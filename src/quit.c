@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mappings.h                                         :+:      :+:    :+:   */
+/*   quit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/14 03:53:53 by cababou           #+#    #+#             */
-/*   Updated: 2018/12/14 03:55:01 by cababou          ###   ########.fr       */
+/*   Created: 2019/01/18 00:11:06 by cababou           #+#    #+#             */
+/*   Updated: 2019/01/18 01:17:58 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAPPINGS_H
-# define MAPPINGS_H
+#include "wolf3d.h"
 
-# define ESCAPE 53
+void	quit_event(t_wolf *w, SDL_Event sdl_event)
+{
 
-#endif
+}

@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 22:37:39 by cababou           #+#    #+#             */
-/*   Updated: 2018/12/14 04:08:38 by cababou          ###   ########.fr       */
+/*   Updated: 2019/01/18 00:10:53 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,25 +24,27 @@ void	exit_program(int code)
 		quit("An error occured.", code);
 	else if (code == ERROR_MEMORY)
 		quit("A memory error occured.", code);
-	else if (code == ERROR_MLX_INIT)
-		quit("Couldn't initalize mlx.", code);
-	else if (code == ERROR_MLX_WINDOW_INIT)
-		quit("Couldn't initialize mlx window", code);
+	else if (code == ERROR_SDL_INIT)
+		quit("Couldn't initalize SDL.", code);
+	else if (code == ERROR_SDL_WINDOW_INIT)
+		quit("Couldn't initialize SDL window", code);
 	else
 		quit("Exiting Wolf3D", code);
 }
 
 void	bind_events(t_wolf *wolf)
 {
-	mlx_hook(wolf->main_win, KeyPress, KeyPressMask, handler_keypress, wolf);
+	register_event(wolf, SDL_QUIT, quit_event);
 }
 
-void	init_mlx(t_wolf *wolf)
+void	init_sdl(t_wolf *wolf)
 {
-	if ((wolf->mlx = mlx_init()) == NULL)
-		exit_program(ERROR_MLX_INIT);
-	if ((wolf->main_win = mlx_new_window(wolf->mlx, 1366, 768, "W3D")) == NULL)
-		exit_program(ERROR_MLX_WINDOW_INIT);
+	if (SDL_Init(SDL_INIT_VIDEO) < 0)
+		exit_program(ERROR_SDL_INIT);
+	if ((wolf->window = SDL_CreateWindow("W3D", 5, 5,
+		WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN)) <= 0)
+		exit_program(ERROR_SDL_WINDOW_INIT);
+	wolf->surface = SDL_GetWindowSurface(wolf->window);
 }
 
 int		main(int argc, char **argv)
@@ -51,9 +53,9 @@ int		main(int argc, char **argv)
 
 	if ((wolf = malloc(sizeof(t_wolf))) == NULL)
 		exit_program(ERROR_MEMORY);
-	init_mlx(wolf);
+	init_sdl(wolf);
+	init_events(wolf);
 	bind_events(wolf);
-	init_keys(wolf);
-	mlx_loop(wolf->mlx);
+	gameloop(wolf);
 	return (0);
 }
