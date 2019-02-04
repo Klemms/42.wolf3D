@@ -6,7 +6,7 @@
 #    By: cababou <cababou@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/13 22:39:07 by cababou           #+#    #+#              #
-#    Updated: 2019/01/18 00:02:54 by cababou          ###   ########.fr        #
+#    Updated: 2019/01/23 00:34:39 by cababou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,9 @@ COL_WHITE	:= \033[1;37m
 
 NAME :=	wolf3d
 
-SRC :=	wolf3d.c events.c game_logic/main_loop.c
+SRC :=	wolf3d.c vectors.c parsing.c player.c lov.c line.c init_sight.c \
+		events.c draw.c errors/errors.c mlx_context/inits.c \
+		map/texture_loading.c mlx_context/image_manip.c
 
 OBJ := $(SRC:.c=.o)
 
@@ -53,12 +55,12 @@ CURRENT_FILES = $(shell ls $(PWD)/obj/ 2> /dev/null | wc -l | sed -e 's/ //g')
 all : libft_comp $(NAME)
 
 $(NAME) : $(OBJP)
-			@gcc $(FLAG) $(SDL) $(MLX) $(OBJP) ./libft/libft.a -o $(NAME)
+			@gcc -g $(FLAG) $(MLX) $(OBJP) ./libft/libft.a -o $(NAME)
 			@echo "$(CLEAR_LINE)$(COL_BLUE)[$(NAME)] $(COL_YELLOW)Finished compilation. Output file : $(COL_VIOLET)$(PWD)/$(NAME)$(COL_END)"
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
 			@mkdir -p $(ONLYDIR)
-			@gcc -c $(FLAG) $< -o $@
+			@gcc -g -c $(FLAG) $< -o $@
 			@echo "$(CLEAR_LINE)$(COL_BLUE)[$(NAME)] $(COL_YELLOW)Compiling file [$(COL_VIOLET)$<$(COL_YELLOW)]. ($(CURRENT_FILES) / $(TOTAL_FILES))$(COL_END)$(BEGIN_LINE)"
 
 libft_comp:

@@ -5,82 +5,136 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/13 22:37:08 by cababou           #+#    #+#             */
-/*   Updated: 2019/01/18 00:11:52 by cababou          ###   ########.fr       */
+/*   Created: 2019/02/01 13:43:48 by cababou           #+#    #+#             */
+/*   Updated: 2019/02/01 14:13:41 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef WOLF3D_H
 # define WOLF3D_H
 
-# include "stdlib.h"
-# include "errors.h"
-
-# include "events/mappings.h"
-
-# include <SDL2/SDL.h>
-# include "../libft/libft.h"
+# include <mlx.h>
+# include <stdlib.h>
+# include <fcntl.h>
+# include <unistd.h>
 # include <math.h>
+# include <time.h>
+# include <Tk/X11/X.h>
+# include "../libft/libft.h"
+# include "errors/errors.h"
 
-# include <stdio.h>
-
-# define WINDOW_WIDTH 1366
-# define WINDOW_HEIGHT 768
-# define FRAMERATE 1000 / 60
-
-/*int worldMap[24][24]=
+typedef struct		s_image
 {
-  {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,2,2,2,2,2,0,0,0,0,3,0,3,0,3,0,0,0,1},
-  {1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,3,0,0,0,3,0,0,0,1},
-  {1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,2,2,0,2,2,0,0,0,0,3,0,3,0,3,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,0,4,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,0,0,0,0,5,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,0,4,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,0,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
-};*/
+	void		*ptr;
+	char		*img;
+	int			bpp;
+	int			s_l;
+	int			endian;
+}					t_image;
 
-typedef struct			s_wolf
+typedef struct		s_vec
 {
-	SDL_Window			*window;
-	SDL_Surface			*surface;
-	SDL_Event			last_event;
-	t_lstcontainer		*events;
-	Uint32				last_frame;
-}						t_wolf;
+	double	x;
+	double	y;
+	double	z;
+}					t_vec;
 
-typedef struct			s_registered_event
+typedef struct		s_line
 {
-	Uint32				type;
-	int					(*handler)(t_wolf *wolf, SDL_Event ev);
-}						t_registered_event;
+	t_vec	cur;
+	t_vec	dir;
+	t_vec	inc;
+	int		color;
+}					t_line;
 
-void					gameloop(t_wolf *wolf);
+typedef struct		s_player
+{
+	t_vec		*pos;
+	t_vec		*dir;
+	t_vec		*plane;
+	double		speed;
+	double		rotspeed;
+	int			rov;
+}					t_player;
 
-void					exit_program(int code);
+typedef struct		s_map
+{
+	int		width;
+	int		height;
+	int		start_x;
+	int		start_y;
+	char	**m;
+}					t_map;
 
-void					init_events(t_wolf *wolf);
-int						event_handler(t_wolf *wolf, SDL_Event sdl_event);
-void					register_event(t_wolf *wolf, Uint32 type,
-							int (*handler)(t_wolf *w, SDL_Event ev));
-void					distribute_events(t_wolf *wolf, SDL_Event sdl_event);
+typedef struct		s_key
+{
+	int		left;
+	int		right;
+	int		up;
+	int		down;
+	int		shadow;
+}					t_key;
 
-void					quit_event(t_wolf *w, SDL_Event sdl_event);
+typedef struct		s_texture
+{
+	t_image		img;
+	int			height;
+	int			width;
+}					t_texture;
 
+typedef struct		s_wolf
+{
+	void			*mlx;
+	void			*window;
+	int				w_width;
+	int				w_height;
+	char			*w_title;
+	t_image			*image;
+	t_map			*map;
+	t_player		*you;
+	t_key			*keys;
+	clock_t			oldtime;
+	clock_t			curtime;
+	double			fps;
+	t_texture		texture[4];
+	int				temp_color;
+}					t_wolf;
+
+typedef struct		s_sight
+{
+	double	camera_x;
+	t_vec	ray_dir;
+	t_vec	*pos;
+	t_vec	side_dist;
+	t_vec	delta_dist;
+	double	perp_wall_dist;
+	t_vec	step;
+	int		hit;
+	int		cpt;
+	int		rov;
+	int		side;
+	int		tex;
+}					t_sight;
+
+t_wolf				*init_wolf();
+void				init_mlx(t_wolf *w);
+t_image				*new_screen_image(t_wolf *w);
+
+int					init_texture(t_wolf *w, char *argv[]);
+
+t_player			*new_player(t_map *map);
+int					draw(t_wolf *w);
+int					parsing(char *file, t_map *map);
+int					key_down(int key, t_wolf *w);
+int					key_up(int key, t_wolf *w);
+void				line(t_wolf *w, t_vec *start, t_vec *end, int color);
+t_vec				*new_vec(double x, double y, double z);
+int					loop(t_wolf *w);
+void				calc_lov(t_wolf *w);
+void				init_sight(t_wolf *w, t_sight *p, double x, t_player *you);
+void				pixel_put(t_wolf *w, char *ptr, int x, int y);
+
+void				exit_program(int code);
+void				quit(char *message, int code);
+int					close_window(t_wolf *w);
 #endif

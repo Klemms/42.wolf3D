@@ -6,7 +6,7 @@
 #    By: cababou <cababou@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/13 22:39:07 by cababou           #+#    #+#              #
-#    Updated: 2018/12/14 00:52:23 by cababou          ###   ########.fr        #
+#    Updated: 2019/01/22 23:29:51 by cababou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,7 +42,7 @@ SRC :=	ft_atoi.c ft_bzero.c ft_isalnum.c ft_isalpha.c ft_isascii.c \
 		listcontainer_size.c listcontainer_fastsize.c \
 		ft_lststrsplit.c ft_strsplitone.c ft_letter_to_int.c \
 		ft_hex_to_int.c ft_pow.c ft_hex_to_color.c \
-		ft_rgba_to_int.c ft_lstget_fromelement.c
+		ft_rgba_to_int.c ft_lstget_fromelement.c get_next_line.c
 
 OBJ := 	$(SRC:.c=.o)
 

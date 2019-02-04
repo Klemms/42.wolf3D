@@ -1,0 +1,26 @@
+_METADATA:
+map_name=L'incroyable premiere map du nouveau format
+_END
+_MAP:
+AAAA{A:SB}AAAAAA
+A.........A
+AAAAAAA{A:NA:SB:EC}}..A
+A.........A
+A.........A
+A.AAA..AA.A
+A...A.....A
+A.........A
+AAAAAAAAAAA
+_END
+_BLOCKS:
+A:{
+walkable=false
+see_through=false
+texture=A
+}
+_END
+_TEXTURES:
+A:nicolas
+B:jose
+C:cricri
+_END
